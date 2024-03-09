@@ -11,8 +11,8 @@ int main(){
     std::cout << a << std::endl;
     std::cout << a/b << std::endl;
     std::cout << std::sqrt(b) << std::endl;
-    std::cout << std::acos(-1) << std::endl;
-    std::cout << std::sin(30.0/180.0*acos(-1)) << std::endl;
+    std::cout << std::acos(-1) << std::endl;  // cos(?) = -1 >> Pi
+    std::cout << std::sin(30.0/180.0*acos(-1)) << std::endl;  // sin(Pi/6)
 
     // Example of vector
     std::cout << "Example of vector \n";
@@ -38,11 +38,28 @@ int main(){
     j << 2.0, 3.0, 1.0, 4.0, 6.0, 5.0, 9.0, 7.0, 8.0;
     // matrix output
     std::cout << "Example of output \n";
-    std::cout << i << std::endl;
+    std::cout << "i =\n" << i << std::endl;
+    std::cout << "j =\n" << j << std::endl;
     // matrix add i + j
+	std::cout << "i + j =\n" << i + j << std::endl;
     // matrix scalar multiply i * 2.0
+	std::cout << "i * 2 =\n" << i * 2.0f << std::endl;
     // matrix multiply i * j
+	std::cout << "i * j =\n" << i * j << std::endl;
     // matrix multiply vector i * v
+	std::cout << "i * v =\n" << i * v << std::endl;
+	// vector v & w dot product (inner product)
+	std::cout << "Dot product of v and w:\n" << v.adjoint() * w << std::endl;
+	std::cout << "Dot product of w and v:\n" << w.adjoint() * v << std::endl;
+	// vector v & w cross product
+	std::cout << "Cross product of v and w:\n" << v.cross(w) << std::endl;
+	std::cout << "Cross product of w and v:\n" << w.cross(v) << std::endl;
+
+    Eigen::Vector3f p(2.0f,1.0f, 1.0f);
+	Eigen::Matrix3f rot;
+    rot << cos(acos(-1)/4), -sin(acos(-1)/4), 1.0, sin(acos(-1)/4), cos(acos(-1)/4), 2.0, 0.0, 0.0, 1.0;
+	std::cout << "P = (2, 1)\nRotate counterclockwise Pi/4, and then transform (1, 2)\n";
+	std::cout << "Result is:\n" << rot * p << std::endl;
 
     return 0;
 }
