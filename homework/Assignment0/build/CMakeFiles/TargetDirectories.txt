@@ -1,3 +1,0 @@
-/mnt/g/Graphics/games101/homework/Assignment0/build/CMakeFiles/Transformation.dir
-/mnt/g/Graphics/games101/homework/Assignment0/build/CMakeFiles/edit_cache.dir
-/mnt/g/Graphics/games101/homework/Assignment0/build/CMakeFiles/rebuild_cache.dir
