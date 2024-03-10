@@ -3,6 +3,7 @@
 #include <eigen3/Eigen/Eigen>
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <cmath>
 
 constexpr double MY_PI = 3.1415926;
 
@@ -11,37 +12,69 @@ Eigen::Matrix4f get_view_matrix(Eigen::Vector3f eye_pos)
     Eigen::Matrix4f view = Eigen::Matrix4f::Identity();
 
     Eigen::Matrix4f translate;
-    translate << 1, 0, 0, -eye_pos[0], 0, 1, 0, -eye_pos[1], 0, 0, 1,
-        -eye_pos[2], 0, 0, 0, 1;
+    translate << 1, 0, 0, -eye_pos[0],
+                0, 1, 0, -eye_pos[1],
+                0, 0, 1, -eye_pos[2],
+                0, 0, 0, 1;
 
     view = translate * view;
 
     return view;
 }
 
+
 Eigen::Matrix4f get_model_matrix(float rotation_angle)
 {
-    Eigen::Matrix4f model = Eigen::Matrix4f::Identity();
+    Eigen::Matrix4f mo = Eigen::Matrix4f::Identity();
 
     // TODO: Implement this function
     // Create the model matrix for rotating the triangle around the Z axis.
     // Then return it.
 
-    return model;
+    double radia = MY_PI * rotation_angle / 180.0;
+
+    mo << std::cos(radia), -std::sin(radia), 0.0, 0.0,
+            std::sin(radia), std::cos(radia), 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0;
+
+    return mo;
 }
 
 Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
                                       float zNear, float zFar)
 {
     // Students will implement this function
-
-    Eigen::Matrix4f projection = Eigen::Matrix4f::Identity();
-
     // TODO: Implement this function
     // Create the projection matrix for the given parameters.
     // Then return it.
 
-    return projection;
+    Eigen::Matrix4f paraToOrtho = Eigen::Matrix4f::Identity();
+    paraToOrtho << zNear, 0, 0, 0,
+                0, zNear, 0, 0,
+                0, 0, (zNear + zFar), -zNear * zFar,
+                0, 0, 1, 0;
+
+    float radianFov = MY_PI * eye_fov / 180.0;
+    float r = -aspect_ratio * zNear * tan(radianFov / 2);
+    float l = -r;
+    float b = zNear * tan(radianFov / 2);
+    float t = -b;
+
+    Eigen::Matrix4f orthToZero = Eigen::Matrix4f::Identity();
+    orthToZero << 2 / (r - l), 0, 0, 0,
+                0, 2 / (t - b), 0, 0,
+                0, 0, 2 / (zNear - zFar), -(zNear + zFar) / 2,
+                0, 0, 0, 1;
+
+    return orthToZero * paraToOrtho;
+}
+
+
+Eigen::Matrix4f get_rotation(Vector3f axis, float angle)
+{
+    Eigen::Matrix4f ro = Eigen::Matrix4f::Identity();
+    return ro;
 }
 
 int main(int argc, const char** argv)
