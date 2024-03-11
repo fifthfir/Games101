@@ -41,6 +41,7 @@ Eigen::Matrix4f get_model_matrix(float rotation_angle)
     return mo;
 }
 
+
 Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
                                       float zNear, float zFar)
 {
@@ -117,7 +118,7 @@ int main(int argc, const char** argv)
 
     std::vector<Eigen::Vector3i> ind{{0, 1, 2}};
 
-    Eigen::Vector3f axis = {5, 0.5, 3};
+    Eigen::Vector3f axis = {5, 0.5, 3}; // rotation axis
 
     auto pos_id = r.load_positions(pos);
     auto ind_id = r.load_indices(ind);
