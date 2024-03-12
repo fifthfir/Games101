@@ -30,5 +30,26 @@ public:
         return Eigen::Vector3f(color[0], color[1], color[2]);
     }
 
+    Eigen::Vector3f getColorBilinear(float u, float v)
+    {
+        u = std::clamp(u, 0.0f, 1.0f);
+        v = std::clamp(v, 0.0f, 1.0f);
+
+        float w1 = int(u * width), h1 = int(v * height);
+        float w2 = w1 + 1, h2 = h1;
+        float w3 = w1, h3 = h1 + 1;
+        float w4 = w1 + 1, h4 = h1 + 1;
+
+        Eigen::Vector3f color1, color2, color3, color4, color5, color6, color;
+        color1 = getColor(w1 / width, h1 / height);
+        color2 = getColor(w2 / width, h2 / height);
+        color3 = getColor(w3 / width, h3 / height);
+        color4 = getColor(w4 / width, h4 / height);
+        color5 = color1 + (color2 - color1) * (u * width - w1);
+        color6 = color3 + (color4 - color3) * (u * width - w1);
+        color = color5 + (color6 - color5) * (v * height - h1);
+
+        return color;
+    }
 };
 #endif //RASTERIZER_TEXTURE_H
