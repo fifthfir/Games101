@@ -271,10 +271,10 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t, const std::array<Eig
     // TODO : set the current pixel (use the set_pixel function) to the color of the triangle (use getColor function) if it should be painted.
 
     // If so, use the following code to get the interpolated z value.
-    //auto[alpha, beta, gamma] = computeBarycentric2D(x, y, t.v);
-    //float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
-    //float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
-    //z_interpolated *= w_reciprocal;
+    // auto[alpha, beta, gamma] = computeBarycentric2D(x, y, t.v);
+    // float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
+    // float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
+    // z_interpolated *= w_reciprocal;
 
     for (int i = xMin; i <= xMax; i++) {
         for (int j = yMin; j <= yMax; j++) {
@@ -314,7 +314,7 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t, const std::array<Eig
                     Eigen::Vector2f interpolated_texcoords = alpha * t.tex_coords[0] + beta * t.tex_coords[1] + gamma * t.tex_coords[2];
                     Eigen::Vector3f interpolated_shadingcoords = alpha * view_pos[0] + beta * view_pos[1] + gamma * view_pos[2];
 
-                    fragment_shader_payload payload( interpolated_color, interpolated_normal.normalized(), interpolated_texcoords, texture ? &*texture : nullptr);
+                    fragment_shader_payload payload(interpolated_color, interpolated_normal.normalized(), interpolated_texcoords, texture ? &*texture : nullptr);
                     payload.view_pos = interpolated_shadingcoords;
                     //Instead of passing the triangle's color directly to the frame buffer, pass the color to the shaders first to get the final color;
                     auto pixel_color = fragment_shader(payload);
@@ -322,15 +322,9 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t, const std::array<Eig
                     Eigen::Vector2i point(i, j);
                     set_pixel(point, pixel_color);
                 }
-
-
-
             }
         }
     }
-
-
- 
 }
 
 void rst::rasterizer::set_model(const Eigen::Matrix4f& m)
