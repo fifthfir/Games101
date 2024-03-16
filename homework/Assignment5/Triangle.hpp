@@ -11,7 +11,18 @@ bool rayTriangleIntersect(const Vector3f& v0, const Vector3f& v1, const Vector3f
     // that's specified bt v0, v1 and v2 intersects with the ray (whose
     // origin is *orig* and direction is *dir*)
     // Also don't forget to update tnear, u and v.
-    return false;
+    Vector3f e1 = v1 - v0;
+    Vector3f e2 = v2 - v0;
+    Vector3f s = orig - v0;
+    Vector3f s1 = crossProduct(dir, e2);
+    Vector3f s2 = crossProduct(s, e1);
+
+    tnear = dotProduct(s2, e2) / dotProduct(s1, e1);
+    u = dotProduct(s1, s) / dotProduct(s1, e1);
+    v = dotProduct(s2, dir) / dotProduct(s1, e1);
+
+    float EPSILON = 0.00001F; // Accuracy of float
+    return 1 - u - v + EPSILON >= 0 && u + EPSILON >= 0 && v + EPSILON >= 0 && tnear + EPSILON > 0;
 }
 
 class MeshTriangle : public Object
@@ -33,6 +44,15 @@ public:
         memcpy(stCoordinates.get(), st, sizeof(Vector2f) * maxIndex);
     }
 
+    /**
+     *
+     * @param orig Ray origin
+     * @param dir Ray direction
+     * @param tnear distance to the closest intersected object
+     * @param index the index of the intersect triangle if the intersected object is a mesh.
+     * @param uv
+     * @return true if the ray intersects with this object, false otherwise.
+     */
     bool intersect(const Vector3f& orig, const Vector3f& dir, float& tnear, uint32_t& index,
                    Vector2f& uv) const override
     {
@@ -68,6 +88,7 @@ public:
         const Vector2f& st0 = stCoordinates[vertexIndex[index * 3]];
         const Vector2f& st1 = stCoordinates[vertexIndex[index * 3 + 1]];
         const Vector2f& st2 = stCoordinates[vertexIndex[index * 3 + 2]];
+        // That's why b1 = u and b2 = v in rayTriangleIntersect()
         st = st0 * (1 - uv.x - uv.y) + st1 * uv.x + st2 * uv.y;
     }
 

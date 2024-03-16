@@ -9,8 +9,10 @@
 // depth, field-of-view, etc.). We then call the render function().
 int main()
 {
+    // Set scene
     Scene scene(1280, 960);
 
+    // Set objects, materials, etc.
     auto sph1 = std::make_unique<Sphere>(Vector3f(-1, 0, -12), 2);
     sph1->materialType = DIFFUSE_AND_GLOSSY;
     sph1->diffuseColor = Vector3f(0.6, 0.7, 0.8);
@@ -19,9 +21,11 @@ int main()
     sph2->ior = 1.5;
     sph2->materialType = REFLECTION_AND_REFRACTION;
 
+    // Add objects to scene
     scene.Add(std::move(sph1));
     scene.Add(std::move(sph2));
 
+    // Seems like the plain mat
     Vector3f verts[4] = {{-5,-3,-6}, {5,-3,-6}, {5,-3,-16}, {-5,-3,-16}};
     uint32_t vertIndex[6] = {0, 1, 3, 1, 2, 3};
     Vector2f st[4] = {{0, 0}, {1, 0}, {1, 1}, {0, 1}};
@@ -29,9 +33,12 @@ int main()
     mesh->materialType = DIFFUSE_AND_GLOSSY;
 
     scene.Add(std::move(mesh));
+
+    // Add lights
     scene.Add(std::make_unique<Light>(Vector3f(-20, 70, 20), 0.5));
     scene.Add(std::make_unique<Light>(Vector3f(30, 50, -12), 0.5));    
 
+    // Render this scene
     Renderer r;
     r.Render(scene);
 
