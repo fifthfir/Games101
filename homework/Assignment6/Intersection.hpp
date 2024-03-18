@@ -12,12 +12,12 @@ class Sphere;
 struct Intersection
 {
     Intersection(){
-        happened=false;
-        coords=Vector3f();
-        normal=Vector3f();
-        distance= std::numeric_limits<double>::max();
-        obj =nullptr;
-        m=nullptr;
+        happened = false;
+        coords = Vector3f();
+        normal = Vector3f();
+        distance = std::numeric_limits<double>::max();
+        obj = nullptr;
+        m = nullptr;
     }
     bool happened;
     Vector3f coords;
