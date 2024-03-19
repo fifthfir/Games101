@@ -235,24 +235,35 @@ inline Intersection Triangle::getIntersection(Ray ray)
 
     if (dotProduct(ray.direction, normal) > 0)
         return inter;
+
     double u, v, t_tmp = 0;
-    Vector3f pvec = crossProduct(ray.direction, e2);
-    double det = dotProduct(e1, pvec);
+    Vector3f s1 = crossProduct(ray.direction, e2);
+    double det = dotProduct(e1, s1);
     if (fabs(det) < EPSILON)
         return inter;
 
     double det_inv = 1. / det;
-    Vector3f tvec = ray.origin - v0;
-    u = dotProduct(tvec, pvec) * det_inv;
+    Vector3f s = ray.origin - v0;
+    u = dotProduct(s, s1) * det_inv;
     if (u < 0 || u > 1)
         return inter;
-    Vector3f qvec = crossProduct(tvec, e1);
-    v = dotProduct(ray.direction, qvec) * det_inv;
+    Vector3f s2 = crossProduct(s, e1);
+    v = dotProduct(ray.direction, s2) * det_inv;
     if (v < 0 || u + v > 1)
         return inter;
-    t_tmp = dotProduct(e2, qvec) * det_inv;
+    t_tmp = dotProduct(e2, s2) * det_inv;
+
+    if (t_tmp < 0) {
+        return inter;
+    }
 
     // TODO find ray triangle intersection
+    inter.happened = true;
+    inter.coords = ray(t_tmp);  // = v0 * (1 - u - v) + v1 * u + v2 * v;
+    inter.normal = normal;
+    inter.m = m;
+    inter.obj = this;
+    inter.distance = t_tmp;
 
     return inter;
 }
