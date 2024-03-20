@@ -39,7 +39,6 @@ cv::Point2f recursive_bezier(const std::vector<cv::Point2f> &control_points, flo
     std::size_t count = control_points.size();
 
     if (count == 1) {
-//        std::cout << "end recursive" << std::endl;
         return control_points[0];
     }
 
@@ -98,11 +97,11 @@ int main()
 
         if (control_points.size() == 4)
         {
-//            naive_bezier(control_points, window);
+            naive_bezier(control_points, window);
             bezier(control_points, window);
 
             cv::imshow("Bezier Curve", window);
-            cv::imwrite("my_bezier_curve2.png", window);
+            cv::imwrite("my_bezier_curve3.png", window);
             key = cv::waitKey(0);
 
             return 0;
