@@ -265,7 +265,7 @@ Eigen::Vector3f displacement_fragment_shader(const fragment_shader_payload& payl
                           payload.texture->getColorBilinear(u, v).norm());
     Eigen::Vector3f ln(-dU, -dV, 1.0f);
 
-    point = point + kn * normal * (payload.texture->getColorBilinear(u, v)).norm();
+    point += kn * normal * (payload.texture->getColorBilinear(u, v)).norm();
     normal = (TBN * ln).normalized();
 
     Eigen::Vector3f result_color = {0, 0, 0};
