@@ -51,12 +51,11 @@ int OSDText::init(bool use_hdpi) {
   }
 
   // decode font and keep in memory
-  string encoded = get_osdfont_base64();
+  string encoded = osdfont_base64;
   string decoded = base64_decode(encoded);
   size_t size = decoded.size(); 
   font = new char[size]; 
   memcpy(font, decoded.c_str(), size);
-
 
   // initialize font face
   if(FT_New_Memory_Face(*ft, (const FT_Byte*) font, size, 0, face)) {

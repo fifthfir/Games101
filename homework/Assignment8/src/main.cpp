@@ -5,11 +5,7 @@
 typedef uint32_t gid_t;
 
 #include <iostream>
-//#include <unistd.h>
-
-#define __GNU_LIBRARY__
-#include "getopt.h"
-#undef __GNU_LIBRARY__
+#include <unistd.h>
 
 using namespace std;
 using namespace CGL;

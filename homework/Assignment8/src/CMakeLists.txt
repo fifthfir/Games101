@@ -1,14 +1,10 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 2.8)
 
 # Application source
 set(APPLICATION_SOURCE
     rope.cpp
     application.cpp
     main.cpp
-    getopt.c
-    getopt_init.c
-    ./../CGL/deps/glew/src/glew.c
-    ./../CGL/src/osdfont.cpp
 )
 
 #-------------------------------------------------------------------------------
@@ -21,11 +17,6 @@ include_directories(
   ${FREETYPE_INCLUDE_DIRS}
 )
 
-message("GLEW_INCLUDE_DIRS: ${GLEW_INCLUDE_DIRS}")
-message("GLFW_INCLUDE_DIRS: ${GLFW_INCLUDE_DIRS}")
-message("CGL_INCLUDE_DIRS: ${CGL_INCLUDE_DIRS}")
-message("FREETYPE_INCLUDE_DIRS: ${FREETYPE_INCLUDE_DIRS}")
-
 #-------------------------------------------------------------------------------
 # Set link directories
 #-------------------------------------------------------------------------------
@@ -35,11 +26,6 @@ link_directories(
   ${CGL_LIBRARY_DIRS}
   ${FREETYPE_LIBRARY_DIRS}
 )
-
-message("GLEW_LIBRARY_DIRS: ${GLEW_LIBRARY_DIRS}")
-message("GLFW_LIBRARY_DIRS: ${GLFW_LIBRARY_DIRS}")
-message("CGL_LIBRARY_DIRS: ${CGL_LIBRARY_DIRS}")
-message("FREETYPE_LIBRARY_DIRS: ${FREETYPE_LIBRARY_DIRS}")
 
 #-------------------------------------------------------------------------------
 # Add executable
@@ -53,15 +39,7 @@ target_link_libraries( ropesim
     ${OPENGL_LIBRARIES}
     ${FREETYPE_LIBRARIES}
     ${CMAKE_THREADS_INIT}
-    freetype
 )
-
-message("CGL_LIBRARIES: ${CGL_LIBRARIES}")
-message("GLEW_LIBRARIES: ${GLEW_LIBRARIES}")
-message("GLFW_LIBRARIES: ${GLFW_LIBRARIES}")
-message("OPENGL_LIBRARIES: ${OPENGL_LIBRARIES}")
-message("FREETYPE_LIBRARIES: ${FREETYPE_LIBRARIES}")
-message("CMAKE_THREADS_INIT: ${CMAKE_THREADS_INIT}")
 
 #-------------------------------------------------------------------------------
 # Platform-specific configurations for target

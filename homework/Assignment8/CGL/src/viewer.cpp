@@ -120,7 +120,7 @@ void Viewer::init() {
   osd_text = new OSDText();
   if (osd_text->init(HDPI) < 0) {
     out_err("Error: could not initialize on-screen display!");
-    //exit( 1 );
+    exit( 1 );
   }
 
   // add lines for renderer and fps
@@ -208,7 +208,6 @@ void Viewer::drawInfo() {
   }
 
   // render OSD
-  //TODO 由于字体无法解析，就不渲染文本了
   osd_text->render();
 
 }

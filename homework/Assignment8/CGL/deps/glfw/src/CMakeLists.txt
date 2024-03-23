@@ -1,6 +1,4 @@
 
-cmake_minimum_required(VERSION 3.10)
-
 include_directories("${GLFW_SOURCE_DIR}/src"
                     "${GLFW_BINARY_DIR}/src"
                     ${glfw_INCLUDE_DIRS})

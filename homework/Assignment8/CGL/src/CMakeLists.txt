@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 2.8)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-include_directories(./../../../freetype/include)
-
 # CGL library source files
 set(CGL_SOURCE
     vector2D.cpp
@@ -15,7 +13,7 @@ set(CGL_SOURCE
     complex.cpp
     color.cpp
     osdtext.cpp
-    osdfont.cpp
+    osdfont.c
     viewer.cpp
     base64.cpp
     tinyxml2.cpp

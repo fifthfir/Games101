@@ -17,8 +17,7 @@ typedef struct FT_FaceRec_*  FT_Face;
 namespace CGL {
 
 // base64 encoded embeded font
-//extern "C" char osdfont_base64[];
-const char* get_osdfont_base64();
+extern "C" char osdfont_base64[];
 
 struct OSDLine {
   
